@@ -8,7 +8,9 @@ import com.kevin.courserefactor.base.domain.enums.PaymentState;
 import com.kevin.courserefactor.base.repository.PaymentRepository;
 import com.kevin.courserefactor.base.repository.StoreOrderItemRepository;
 import com.kevin.courserefactor.base.repository.StoreOrderRepository;
+import com.kevin.courserefactor.base.service.email.EmailService;
 import com.kevin.courserefactor.base.service.exceptions.ObjectNotFoundException;
+import com.kevin.courserefactor.base.service.ticket.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,7 +70,7 @@ public class StoreOrderService {
             soi.setStoreOrder(obj);
         }
         storeOrderItemRepository.saveAll(obj.getItems());
-        emailService.sendOrderConfirmationEmail(obj);
+        emailService.sendOrderConfirmationHtmlEmail(obj);
         return obj;
     }
 }

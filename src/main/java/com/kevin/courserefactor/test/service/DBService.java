@@ -1,4 +1,4 @@
-package com.kevin.courserefactor.test;
+package com.kevin.courserefactor.test.service;
 
 import com.kevin.courserefactor.base.domain.*;
 import com.kevin.courserefactor.base.domain.enums.ClientType;
@@ -94,7 +94,7 @@ public class DBService {
             stateRepository.saveAll(Arrays.asList(st1, st2));
             cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-            Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "372498474", ClientType.NATURALPERSON);
+            Client cli1 = new Client(null, "Maria Silva", "kevingtxz@gmail.com", "372498474", ClientType.NATURALPERSON);
             cli1.getPhoneNumbers().addAll(Arrays.asList("27363323", "93838393"));
 
             Address a1 = new Address(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cli1, c1);

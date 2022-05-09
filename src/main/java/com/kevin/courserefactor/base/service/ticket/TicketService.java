@@ -1,4 +1,4 @@
-package com.kevin.courserefactor.base.service;
+package com.kevin.courserefactor.base.service.ticket;
 
 import com.kevin.courserefactor.base.domain.PaymentWithTicket;
 import org.springframework.stereotype.Service;
