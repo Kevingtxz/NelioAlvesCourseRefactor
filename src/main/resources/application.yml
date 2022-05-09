@@ -14,6 +14,7 @@ spring:
             port: 465
             class: javax.net.ssl.SSLSocketFactory
             fallback: false
+
 #  servlet:
 #    multipart:
 #      max-file-size: 10MB
