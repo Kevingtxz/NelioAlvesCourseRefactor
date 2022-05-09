@@ -26,6 +26,8 @@ public class Client implements Serializable {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     private Integer clientType;
+    @JsonIgnore
+    private String password;
 
     @ElementCollection
     @CollectionTable(name="PHONE_NUMBER")
@@ -39,12 +41,13 @@ public class Client implements Serializable {
     private List<StoreOrder> storeOrders = new ArrayList<>();
 
 
-    public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType) {
+    public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.cpfOrCnpj = cpfOrCnpj;
         this.clientType = clientType != null ? clientType.getCod() : null;
+        this.password = password;
     }
 
 

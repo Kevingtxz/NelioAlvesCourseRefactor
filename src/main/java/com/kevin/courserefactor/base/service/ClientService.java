@@ -15,6 +15,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,9 @@ import java.util.List;
 
 @Service
 public class ClientService {
+
+    @Autowired
+    private BCryptPasswordEncoder pe;
 
     @Autowired
     private ClientRepository repo;
@@ -76,7 +80,8 @@ public class ClientService {
                 objNewDto.getName(),
                 objNewDto.getEmail(),
                 objNewDto.getCpfOrCnpj(),
-                ClientType.toEnum(objNewDto.getClientType()));
+                ClientType.toEnum(objNewDto.getClientType()),
+                pe.encode(objNewDto.getPassword()));
         Address address = new Address(
                 null,
                 objNewDto.getStreet(),
@@ -97,7 +102,7 @@ public class ClientService {
     }
 
     public Client fromDto(ClientForm objDto) {
-        return new Client(null, objDto.getName(), objDto.getEmail(), null, null);
+        return new Client(null, objDto.getName(), objDto.getEmail(), null, null, null);
     }
 
     private void updateData(Client obj, Client updObj) {

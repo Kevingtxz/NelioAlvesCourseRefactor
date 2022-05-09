@@ -30,6 +30,8 @@ public class ClientFormNew implements Serializable {
     private String cpfOrCnpj;
     private Integer clientType;
     @NotEmpty(message = "Mandatory completion")
+    private String password;
+    @NotEmpty(message = "Mandatory completion")
     private String phoneNumber1;
     private String phoneNumber2;
     private String phoneNumber3;

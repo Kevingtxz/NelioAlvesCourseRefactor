@@ -5,6 +5,7 @@ import com.kevin.courserefactor.base.domain.enums.ClientType;
 import com.kevin.courserefactor.base.domain.enums.PaymentState;
 import com.kevin.courserefactor.base.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -12,6 +13,9 @@ import java.util.Arrays;
 
 @Service
 public class DBService {
+
+    @Autowired
+    private BCryptPasswordEncoder pe;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -94,7 +98,7 @@ public class DBService {
             stateRepository.saveAll(Arrays.asList(st1, st2));
             cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-            Client cli1 = new Client(null, "Maria Silva", "kevingtxz@gmail.com", "372498474", ClientType.NATURALPERSON);
+            Client cli1 = new Client(null, "Maria Silva", "kevingtxz@gmail.com", "372498474", ClientType.NATURALPERSON, pe.encode("123"));
             cli1.getPhoneNumbers().addAll(Arrays.asList("27363323", "93838393"));
 
             Address a1 = new Address(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cli1, c1);
