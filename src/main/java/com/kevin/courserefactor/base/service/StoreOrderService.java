@@ -6,7 +6,6 @@ import com.kevin.courserefactor.base.domain.StoreOrder;
 import com.kevin.courserefactor.base.domain.StoreOrderItem;
 import com.kevin.courserefactor.base.domain.enums.PaymentState;
 import com.kevin.courserefactor.base.repository.PaymentRepository;
-import com.kevin.courserefactor.base.repository.ProductRepository;
 import com.kevin.courserefactor.base.repository.StoreOrderItemRepository;
 import com.kevin.courserefactor.base.repository.StoreOrderRepository;
 import com.kevin.courserefactor.base.service.exceptions.ObjectNotFoundException;
@@ -37,6 +36,9 @@ public class StoreOrderService {
     @Autowired
     private StoreOrderItemRepository storeOrderItemRepository;
 
+    @Autowired
+    private EmailService emailService;
+
 
     public StoreOrder find(Integer id) {
         return repo.findById(id)
@@ -66,7 +68,7 @@ public class StoreOrderService {
             soi.setStoreOrder(obj);
         }
         storeOrderItemRepository.saveAll(obj.getItems());
-        System.out.println(obj);
+        emailService.sendOrderConfirmationEmail(obj);
         return obj;
     }
 }

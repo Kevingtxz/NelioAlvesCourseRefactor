@@ -5,10 +5,10 @@ spring:
 #      max-file-size: 10MB
 #      max-request-size: 10MB
 #
-#default:
-#  sender: ${EMAIL_SENDER:none}
-#  recipient: ${EMAIL_RECIPIENT:none}
-#
+default:
+  sender: ${EMAIL_SENDER:none}
+  recipient: ${EMAIL_RECIPIENT:none}
+
 #jwt:
 #  secret: ${JWT_SECRET:none}
 #  expiration: ${JWT_EXPIRATION:86400}

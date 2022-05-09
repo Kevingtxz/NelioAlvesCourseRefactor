@@ -1,8 +1,8 @@
 package com.kevin.courserefactor.base.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kevin.courserefactor.base.domain.PaymentWithTicket;
 import com.kevin.courserefactor.base.domain.PaymentWithCard;
+import com.kevin.courserefactor.base.domain.PaymentWithTicket;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
