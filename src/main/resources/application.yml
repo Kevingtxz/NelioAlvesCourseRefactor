@@ -1,5 +1,5 @@
 spring:
-  profiles.active: ${APP_PROFILE:prod}
+  profiles.active: ${APP_PROFILE:test}
 #  servlet:
 #    multipart:
 #      max-file-size: 10MB
@@ -23,4 +23,7 @@ spring:
 #img:
 #  prefix.client.profile: cp
 #  profile.size: 200
+
+
+
 
