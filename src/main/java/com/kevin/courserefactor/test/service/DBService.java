@@ -3,6 +3,7 @@ package com.kevin.courserefactor.test.service;
 import com.kevin.courserefactor.base.domain.*;
 import com.kevin.courserefactor.base.domain.enums.ClientType;
 import com.kevin.courserefactor.base.domain.enums.PaymentState;
+import com.kevin.courserefactor.base.domain.enums.ProfileRole;
 import com.kevin.courserefactor.base.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -98,16 +99,21 @@ public class DBService {
             stateRepository.saveAll(Arrays.asList(st1, st2));
             cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-            Client cli1 = new Client(null, "Maria Silva", "kevingtxz@gmail.com", "372498474", ClientType.NATURALPERSON, pe.encode("123"));
+            Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "372498474", ClientType.NATURALPERSON, pe.encode("user"));
             cli1.getPhoneNumbers().addAll(Arrays.asList("27363323", "93838393"));
+
+            Client cli2 = new Client(null, "Julio Alvares", "kevingtxz@gmail.com", "57848193055", ClientType.NATURALPERSON, pe.encode("admin"));
+            cli2.addProfileRole(ProfileRole.ADMIN);
 
             Address a1 = new Address(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cli1, c1);
             Address a2 = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
+            Address a3 = new Address(null, "Avenida Floriano", "2106", null, "Centro", "28777012", cli2, c2);
 
             cli1.getAddresses().addAll(Arrays.asList(a1, a2));
+            cli2.getAddresses().addAll(Arrays.asList(a3));
 
-            clientRepository.saveAll(Arrays.asList(cli1));
-            addressRepository.saveAll(Arrays.asList(a1, a2));
+            clientRepository.saveAll(Arrays.asList(cli1, cli2));
+            addressRepository.saveAll(Arrays.asList(a1, a2, a3));
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 

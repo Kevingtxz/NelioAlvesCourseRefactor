@@ -2,15 +2,16 @@ package com.kevin.courserefactor.base.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kevin.courserefactor.base.domain.enums.ClientType;
+import com.kevin.courserefactor.base.domain.enums.ProfileRole;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString
 @Entity
 public class Client implements Serializable {
@@ -33,6 +34,12 @@ public class Client implements Serializable {
     @CollectionTable(name="PHONE_NUMBER")
     private Set<String> phoneNumbers = new HashSet<>();
 
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name="PROFILE_ROLES")
+    private Set<Integer> profileRoles = new HashSet<>();
+
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Address> addresses = new ArrayList<>();
 
@@ -41,12 +48,17 @@ public class Client implements Serializable {
     private List<StoreOrder> storeOrders = new ArrayList<>();
 
 
+    public Client() {
+        this.profileRoles.add(ProfileRole.CLIENT.getCod());
+    }
+
     public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.cpfOrCnpj = cpfOrCnpj;
         this.clientType = clientType != null ? clientType.getCod() : null;
+        this.profileRoles.add(ProfileRole.CLIENT.getCod());
         this.password = password;
     }
 
@@ -57,6 +69,17 @@ public class Client implements Serializable {
 
     public void setClientType(ClientType clientType) {
         this.clientType = clientType.getCod()   ;
+    }
+
+    public Set<ProfileRole> getProfileRoles() {
+        return this.profileRoles
+                .stream()
+                .map(e -> ProfileRole.toEnum(e))
+                .collect(Collectors.toSet());
+    }
+
+    public void addProfileRole(ProfileRole profileRole) {
+        this.profileRoles.add(profileRole.getCod());
     }
 
     @Override
