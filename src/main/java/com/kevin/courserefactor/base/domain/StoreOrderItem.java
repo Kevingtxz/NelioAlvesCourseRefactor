@@ -4,17 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Objects;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 public class StoreOrderItem implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -68,5 +68,21 @@ public class StoreOrderItem implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+
+        StringBuilder strBuilder = new StringBuilder();
+        strBuilder.append(this.getProduct().getName());
+        strBuilder.append(", Qtd: ");
+        strBuilder.append(this.getQuantity());
+        strBuilder.append(", Unit price: ");
+        strBuilder.append(nf.format(this.getPrice()));
+        strBuilder.append(", Subtotal: ");
+        strBuilder.append(nf.format(this.getSubTotal()));
+        strBuilder.append("\n");
+        return strBuilder.toString();
     }
 }

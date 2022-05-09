@@ -20,19 +20,22 @@ import java.util.Date;
 public class StoreOrderService {
 
     @Autowired
-    private StoreOrderRepository repo;
+    private TicketService ticketService;
 
     @Autowired
-    private TicketService ticketService;
+    private ProductService productService;
+
+    @Autowired
+    private ClientService clientService;
+
+    @Autowired
+    private StoreOrderRepository repo;
 
     @Autowired
     private PaymentRepository paymentRepository;
 
     @Autowired
     private StoreOrderItemRepository storeOrderItemRepository;
-
-    @Autowired
-    private ProductService productService;
 
 
     public StoreOrder find(Integer id) {
@@ -46,6 +49,7 @@ public class StoreOrderService {
     public StoreOrder insert(StoreOrder obj) {
         obj.setId(null);
         obj.setInstant(new Date());
+        obj.setClient(clientService.find(obj.getClient().getId()));
         obj.getPayment().setPaymentState(PaymentState.PENDING);
         obj.getPayment().setStoreOrder(obj);
 
@@ -57,10 +61,12 @@ public class StoreOrderService {
         obj = repo.save(obj);
         for (StoreOrderItem soi : obj.getItems()) {
             soi.setDiscount(0d);
-            soi.setPrice(productService.find(soi.getProduct().getId()).getPrice());
+            soi.setProduct(productService.find(soi.getProduct().getId()));
+            soi.setPrice(soi.getProduct().getPrice());
             soi.setStoreOrder(obj);
         }
         storeOrderItemRepository.saveAll(obj.getItems());
+        System.out.println(obj);
         return obj;
     }
 }

@@ -8,15 +8,13 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 public class StoreOrder implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -68,5 +66,27 @@ public class StoreOrder implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+        StringBuilder strBuilder = new StringBuilder();
+        strBuilder.append("StoreOrder number: ");
+        strBuilder.append(this.getId());
+        strBuilder.append(", Instant: ");
+        strBuilder.append(sdf.format(this.getInstant()));
+        strBuilder.append(", Client: ");
+        strBuilder.append(this.getClient().getName());
+        strBuilder.append(", Payment situation: ");
+        strBuilder.append(this.getPayment().getPaymentState().getDescription());
+        strBuilder.append("\nDetails:\n");
+        for (StoreOrderItem soi : this.getItems())
+            strBuilder.append(soi.toString());
+        strBuilder.append("Total value: ");
+        strBuilder.append(nf.format(this.getTotalValue()));
+        return strBuilder.toString();
     }
 }
