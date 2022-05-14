@@ -1,4 +1,4 @@
-package com.kevin.courserefactor.base.config;
+package com.kevin.courserefactor.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kevin.courserefactor.base.domain.PaymentWithCard;

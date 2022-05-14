@@ -24,9 +24,9 @@ default:
   sender: ${EMAIL_SENDER:none}
   recipient: ${EMAIL_RECIPIENT:none}
 
-#jwt:
-#  secret: ${JWT_SECRET:none}
-#  expiration: ${JWT_EXPIRATION:86400}
+jwt:
+  secret: ${JWT_SECRET:none}
+  expiration: ${JWT_EXPIRATION:5000}
 #
 #aws:
 #  access_key_id: ${AWS_KEY:none}

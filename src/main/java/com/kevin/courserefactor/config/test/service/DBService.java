@@ -1,4 +1,4 @@
-package com.kevin.courserefactor.test.service;
+package com.kevin.courserefactor.config.test.service;
 
 import com.kevin.courserefactor.base.domain.*;
 import com.kevin.courserefactor.base.domain.enums.ClientType;
@@ -102,7 +102,7 @@ public class DBService {
             Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "372498474", ClientType.NATURALPERSON, pe.encode("user"));
             cli1.getPhoneNumbers().addAll(Arrays.asList("27363323", "93838393"));
 
-            Client cli2 = new Client(null, "Julio Alvares", "kevingtxz@gmail.com", "57848193055", ClientType.NATURALPERSON, pe.encode("admin"));
+            Client cli2 = new Client(null, "Julio Alvares", "admin@email.com", "57848193055", ClientType.NATURALPERSON, pe.encode("admin"));
             cli2.addProfileRole(ProfileRole.ADMIN);
 
             Address a1 = new Address(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cli1, c1);
