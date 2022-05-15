@@ -13,22 +13,22 @@ import java.util.Objects;
 @Getter
 @Setter
 @Embeddable
-public class StoreOrderItemPK implements Serializable {
+public class OrderItemPKEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ManyToOne
     @JoinColumn(name = "store_order_id")
-    private StoreOrder storeOrder;
+    private OrderEntity storeOrder;
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Product product;
+    private ProductEntity product;
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StoreOrderItemPK that = (StoreOrderItemPK) o;
+        OrderItemPKEntity that = (OrderItemPKEntity) o;
         return Objects.equals(storeOrder, that.storeOrder) && Objects.equals(product, that.product);
     }
 

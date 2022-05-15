@@ -17,7 +17,7 @@ import java.util.Date;
 @ToString
 @Entity
 @JsonTypeName("paymentWithTicket")
-public class PaymentWithTicket extends Payment {
+public class PaymentWithTicketEntity extends PaymentEntity {
     private static final long serialVersionUID = 1L;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -26,7 +26,7 @@ public class PaymentWithTicket extends Payment {
     private Date datePayment;
 
 
-    public PaymentWithTicket(Integer id, PaymentState paymentState, StoreOrder storeOrder, Date dateLimit, Date datePayment) {
+    public PaymentWithTicketEntity(Integer id, PaymentState paymentState, OrderEntity storeOrder, Date dateLimit, Date datePayment) {
         super(id, paymentState, storeOrder);
         this.dateLimit = dateLimit;
         this.datePayment = datePayment;

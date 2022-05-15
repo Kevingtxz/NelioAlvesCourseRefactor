@@ -1,6 +1,6 @@
 package com.kevin.courserefactor.base.dto.view;
 
-import com.kevin.courserefactor.base.domain.Client;
+import com.kevin.courserefactor.base.domain.ClientEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ public class ClientView {
     private String name;
     private String email;
 
-    public ClientView(Client client) {
+    public ClientView(ClientEntity client) {
         this.id = client.getId();
         this.name = client.getName();
         this.email = client.getEmail();

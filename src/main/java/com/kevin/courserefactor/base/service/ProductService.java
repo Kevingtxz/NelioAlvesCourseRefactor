@@ -1,7 +1,7 @@
 package com.kevin.courserefactor.base.service;
 
 import com.kevin.courserefactor.base.domain.Category;
-import com.kevin.courserefactor.base.domain.Product;
+import com.kevin.courserefactor.base.domain.ProductEntity;
 import com.kevin.courserefactor.base.repository.CategoryRepository;
 import com.kevin.courserefactor.base.repository.ProductRepository;
 import com.kevin.courserefactor.base.service.exceptions.ObjectNotFoundException;
@@ -23,7 +23,7 @@ public class ProductService {
     private CategoryRepository categoryRepository;
 
 
-    public Page<Product> search(
+    public Page<ProductEntity> search(
             String name, List<Integer> categoriesIds,
             Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
@@ -32,10 +32,10 @@ public class ProductService {
 
     }
 
-    public Product find(Integer id) {
+    public ProductEntity find(Integer id) {
         return repo.findById(id)
                 .orElseThrow(() ->
                         new ObjectNotFoundException("Object not found. ID: " + id
-                        + ", Type: " + Product.class.getName()));
+                        + ", Type: " + ProductEntity.class.getName()));
     }
 }

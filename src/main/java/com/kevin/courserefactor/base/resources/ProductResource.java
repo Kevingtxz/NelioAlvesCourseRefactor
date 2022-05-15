@@ -1,6 +1,6 @@
 package com.kevin.courserefactor.base.resources;
 
-import com.kevin.courserefactor.base.domain.Product;
+import com.kevin.courserefactor.base.domain.ProductEntity;
 import com.kevin.courserefactor.base.dto.view.ProductView;
 import com.kevin.courserefactor.base.resources.utils.URL;
 import com.kevin.courserefactor.base.service.ProductService;
@@ -29,7 +29,7 @@ public class ProductResource {
             @RequestParam(value = "direction", defaultValue = "ASC")  String direction) {
         List<Integer> categoriesIds = URL.decodeIntList(categories);
         String nameDecoded = URL.decodeParam(name);
-        Page<Product> list = service.search(
+        Page<ProductEntity> list = service.search(
                 nameDecoded, categoriesIds,
                 page, linesPerPage, orderBy, direction);
         Page<ProductView> listView = list
@@ -38,8 +38,8 @@ public class ProductResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Product> find(@PathVariable Integer id) {
-        Product obj = service.find(id);
+    public ResponseEntity<ProductEntity> find(@PathVariable Integer id) {
+        ProductEntity obj = service.find(id);
         return ResponseEntity.ok().body(obj);
     }
 }

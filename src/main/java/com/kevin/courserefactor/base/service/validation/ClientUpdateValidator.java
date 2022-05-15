@@ -1,6 +1,6 @@
 package com.kevin.courserefactor.base.service.validation;
 
-import com.kevin.courserefactor.base.domain.Client;
+import com.kevin.courserefactor.base.domain.ClientEntity;
 import com.kevin.courserefactor.base.dto.form.ClientForm;
 import com.kevin.courserefactor.base.repository.ClientRepository;
 import com.kevin.courserefactor.base.resources.exceptions.FieldMessage;
@@ -34,7 +34,7 @@ public class ClientUpdateValidator
 
         List<FieldMessage> list = new ArrayList<>();
 
-        Client aux = repo.findByEmail(objDto.getEmail());
+        ClientEntity aux = repo.findByEmail(objDto.getEmail());
         if (aux != null && !aux.getId().equals(uriId))
             list.add(new FieldMessage("email", "Email has already been used"));
 

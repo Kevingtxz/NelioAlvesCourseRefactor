@@ -1,6 +1,6 @@
 package com.kevin.courserefactor.base.service.security;
 
-import com.kevin.courserefactor.base.domain.Client;
+import com.kevin.courserefactor.base.domain.ClientEntity;
 import com.kevin.courserefactor.base.repository.ClientRepository;
 import com.kevin.courserefactor.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Client cli = clientRepository.findByEmail(email);
+        ClientEntity cli = clientRepository.findByEmail(email);
         if (cli == null)
             throw new UsernameNotFoundException(email);
 

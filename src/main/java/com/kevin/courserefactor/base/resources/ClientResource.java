@@ -1,6 +1,6 @@
 package com.kevin.courserefactor.base.resources;
 
-import com.kevin.courserefactor.base.domain.Client;
+import com.kevin.courserefactor.base.domain.ClientEntity;
 import com.kevin.courserefactor.base.dto.form.ClientForm;
 import com.kevin.courserefactor.base.dto.form.ClientFormNew;
 import com.kevin.courserefactor.base.dto.view.ClientView;
@@ -33,7 +33,7 @@ public class ClientResource {
             @RequestParam(value = "linesPerPage", defaultValue = "24")  Integer linesPerPage,
             @RequestParam(value = "orderBy", defaultValue = "name")  String orderBy,
             @RequestParam(value = "direction", defaultValue = "ASC")  String direction) {
-        Page<Client> list = service.findPage(page, linesPerPage, orderBy, direction);
+        Page<ClientEntity> list = service.findPage(page, linesPerPage, orderBy, direction);
         Page<ClientView> listDto = list
                 .map(obj -> new ClientView(obj));
         return ResponseEntity.ok().body(listDto);
@@ -43,7 +43,7 @@ public class ClientResource {
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<ClientView>> findAll() {
-        List<Client> list = service.findAll();
+        List<ClientEntity> list = service.findAll();
         List<ClientView> listDto = list
                 .stream()
                 .map(obj -> new ClientView(obj))
@@ -52,14 +52,14 @@ public class ClientResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Client> find(@PathVariable Integer id) {
-        Client obj = service.find(id);
+    public ResponseEntity<ClientEntity> find(@PathVariable Integer id) {
+        ClientEntity obj = service.find(id);
         return ResponseEntity.ok().body(obj);
     }
 
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody ClientFormNew objNewDto) {
-        Client obj = service.fromDto(objNewDto);
+        ClientEntity obj = service.fromDto(objNewDto);
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -71,7 +71,7 @@ public class ClientResource {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody ClientForm objDto, @PathVariable Integer id) {
-        Client obj = service.fromDto(objDto);
+        ClientEntity obj = service.fromDto(objDto);
         obj.setId(id);
         service.update(obj);
         return ResponseEntity.noContent().build();

@@ -31,11 +31,11 @@ public class DBService {
     @Autowired
     private AddressRepository addressRepository;
     @Autowired
-    private StoreOrderRepository storeOrderRepository;
+    private OrderRepository storeOrderRepository;
     @Autowired
     private PaymentRepository paymentRepository;
     @Autowired
-    private StoreOrderItemRepository storeOrderItemRepository;
+    private OrderItemRepository storeOrderItemRepository;
 
 
     public void instantiateTestDatabase() {
@@ -50,17 +50,17 @@ public class DBService {
             Category cat6 = new Category(null, "Decoração");
             Category cat7 = new Category(null, "Perfumaria");
 
-            Product p1 = new Product(null, "Computador", 2000.00);
-            Product p2 = new Product(null, "Impressora", 800.00);
-            Product p3 = new Product(null, "Mouse", 80.00);
-            Product p4 = new Product(null, "Mesa de escritório", 3000.00);
-            Product p5 = new Product(null, "Toalha", 50.00);
-            Product p6 = new Product(null, "Colcha", 200.00);
-            Product p7 = new Product(null, "TV true color", 1200.00);
-            Product p8 = new Product(null, "Roçadeira", 800.00);
-            Product p9 = new Product(null, "Abajour", 100.00);
-            Product p10 = new Product(null, "Pendente", 180.00);
-            Product p11 = new Product(null, "Shampoo", 90.00);
+            ProductEntity p1 = new ProductEntity(null, "Computador", 2000.00);
+            ProductEntity p2 = new ProductEntity(null, "Impressora", 800.00);
+            ProductEntity p3 = new ProductEntity(null, "Mouse", 80.00);
+            ProductEntity p4 = new ProductEntity(null, "Mesa de escritório", 3000.00);
+            ProductEntity p5 = new ProductEntity(null, "Toalha", 50.00);
+            ProductEntity p6 = new ProductEntity(null, "Colcha", 200.00);
+            ProductEntity p7 = new ProductEntity(null, "TV true color", 1200.00);
+            ProductEntity p8 = new ProductEntity(null, "Roçadeira", 800.00);
+            ProductEntity p9 = new ProductEntity(null, "Abajour", 100.00);
+            ProductEntity p10 = new ProductEntity(null, "Pendente", 180.00);
+            ProductEntity p11 = new ProductEntity(null, "Shampoo", 90.00);
 
             cat1.getProducts().addAll(Arrays.asList(p1, p2, p3));
             cat2.getProducts().addAll(Arrays.asList(p2, p4));
@@ -86,12 +86,12 @@ public class DBService {
             productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 
 
-            State st1 = new State(null, "Minas Gerais");
-            State st2 = new State(null, "São Paulo");
+            StateEntity st1 = new StateEntity(null, "Minas Gerais");
+            StateEntity st2 = new StateEntity(null, "São Paulo");
 
-            City c1 = new City(null, "Uberlândia", st1);
-            City c2 = new City(null, "São Paulo", st2);
-            City c3 = new City(null, "Campinas", st2);
+            CityEntity c1 = new CityEntity(null, "Uberlândia", st1);
+            CityEntity c2 = new CityEntity(null, "São Paulo", st2);
+            CityEntity c3 = new CityEntity(null, "Campinas", st2);
 
             st1.getCities().addAll(Arrays.asList(c1));
             st2.getCities().addAll(Arrays.asList(c2, c3));
@@ -99,15 +99,15 @@ public class DBService {
             stateRepository.saveAll(Arrays.asList(st1, st2));
             cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-            Client cli1 = new Client(null, "Maria Silva", "user@email.com", "372498474", ClientType.NATURALPERSON, pe.encode("user"));
+            ClientEntity cli1 = new ClientEntity(null, "Maria Silva", "user@email.com", "372498474", ClientType.NATURALPERSON, pe.encode("user"));
             cli1.getPhoneNumbers().addAll(Arrays.asList("27363323", "93838393"));
 
-            Client cli2 = new Client(null, "Julio Alvares", "admin@email.com", "57848193055", ClientType.NATURALPERSON, pe.encode("admin"));
+            ClientEntity cli2 = new ClientEntity(null, "Julio Alvares", "admin@email.com", "57848193055", ClientType.NATURALPERSON, pe.encode("admin"));
             cli2.addProfileRole(ProfileRole.ADMIN);
 
-            Address a1 = new Address(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cli1, c1);
-            Address a2 = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
-            Address a3 = new Address(null, "Avenida Floriano", "2106", null, "Centro", "28777012", cli2, c2);
+            AddressEntity a1 = new AddressEntity(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cli1, c1);
+            AddressEntity a2 = new AddressEntity(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
+            AddressEntity a3 = new AddressEntity(null, "Avenida Floriano", "2106", null, "Centro", "28777012", cli2, c2);
 
             cli1.getAddresses().addAll(Arrays.asList(a1, a2));
             cli1.getAddresses().addAll(Arrays.asList(a1, a2));
@@ -118,14 +118,14 @@ public class DBService {
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-            StoreOrder so1 = new StoreOrder(null, sdf.parse("30/09/2017 10:32"), cli1, a1);
-            StoreOrder so2 = new StoreOrder(null, sdf.parse("10/10/2017 19:35"), cli1, a2);
+            OrderEntity so1 = new OrderEntity(null, sdf.parse("30/09/2017 10:32"), cli1, a1);
+            OrderEntity so2 = new OrderEntity(null, sdf.parse("10/10/2017 19:35"), cli1, a2);
 
 
-            Payment pay1 = new PaymentWithCard(null, PaymentState.PAID, so1, 6);
+            PaymentEntity pay1 = new PaymentWithCardEntity(null, PaymentState.PAID, so1, 6);
             so1.setPayment(pay1);
 
-            Payment pay2 = new PaymentWithTicket(null, PaymentState.PENDING, so2, sdf.parse("20/10/2017 00:00"), null);
+            PaymentEntity pay2 = new PaymentWithTicketEntity(null, PaymentState.PENDING, so2, sdf.parse("20/10/2017 00:00"), null);
             so2.setPayment(pay2);
 
             cli1.getStoreOrders().addAll(Arrays.asList(so1, so2));
@@ -133,9 +133,9 @@ public class DBService {
             storeOrderRepository.saveAll(Arrays.asList(so1, so2));
             paymentRepository.saveAll(Arrays.asList(pay1, pay2));
 
-            StoreOrderItem soi1 = new StoreOrderItem(so1, p1, 0.00, 1, 2000.00);
-            StoreOrderItem soi2 = new StoreOrderItem(so1, p3, 0.00, 2, 80.00);
-            StoreOrderItem soi3 = new StoreOrderItem(so2, p2, 100.00, 1, 800.00);
+            OrderItemEntity soi1 = new OrderItemEntity(so1, p1, 0.00, 1, 2000.00);
+            OrderItemEntity soi2 = new OrderItemEntity(so1, p3, 0.00, 2, 80.00);
+            OrderItemEntity soi3 = new OrderItemEntity(so2, p2, 100.00, 1, 800.00);
 
             so1.getItems().addAll(Arrays.asList(soi1, soi2));
             so2.getItems().addAll(Arrays.asList(soi3));

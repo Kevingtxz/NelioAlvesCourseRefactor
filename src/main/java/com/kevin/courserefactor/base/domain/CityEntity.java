@@ -12,7 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @ToString
 @Entity
-public class City implements Serializable {
+public class CityEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -22,14 +22,14 @@ public class City implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "state_id")
-    private State state;
+    private StateEntity state;
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        City city = (City) o;
+        CityEntity city = (CityEntity) o;
         return Objects.equals(id, city.id);
     }
 

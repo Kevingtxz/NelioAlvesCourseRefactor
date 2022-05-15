@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Setter
 @ToString
 @Entity
-public class Client implements Serializable {
+public class ClientEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -44,18 +44,18 @@ public class Client implements Serializable {
     private Set<Integer> profileRoles = new HashSet<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private List<Address> addresses = new ArrayList<>();
+    private List<AddressEntity> addresses = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "client")
-    private List<StoreOrder> storeOrders = new ArrayList<>();
+    private List<OrderEntity> storeOrders = new ArrayList<>();
 
 
-    public Client() {
+    public ClientEntity() {
         this.profileRoles.add(ProfileRole.CLIENT.getCod());
     }
 
-    public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType, String password) {
+    public ClientEntity(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -89,7 +89,7 @@ public class Client implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Client city = (Client) o;
+        ClientEntity city = (ClientEntity) o;
         return Objects.equals(id, city.id);
     }
 

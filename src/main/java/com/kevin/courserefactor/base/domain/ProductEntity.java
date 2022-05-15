@@ -16,7 +16,7 @@ import java.util.*;
 @NoArgsConstructor
 @ToString
 @Entity
-public class Product implements Serializable {
+public class ProductEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -27,7 +27,7 @@ public class Product implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "id.product")
-    private Set<StoreOrderItem> items = new HashSet<>();
+    private Set<OrderItemEntity> items = new HashSet<>();
 
     @JsonIgnore
     @ManyToMany
@@ -39,7 +39,7 @@ public class Product implements Serializable {
 
 
 
-    public Product(Integer id, String name, Double price) {
+    public ProductEntity(Integer id, String name, Double price) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -47,9 +47,9 @@ public class Product implements Serializable {
 
 
     @JsonIgnore
-    public List<StoreOrder> getStoreOrders() {
-        List<StoreOrder> list = new ArrayList<>();
-        for (StoreOrderItem storeOrderItem : items) {
+    public List<OrderEntity> getStoreOrders() {
+        List<OrderEntity> list = new ArrayList<>();
+        for (OrderItemEntity storeOrderItem : items) {
             list.add(storeOrderItem.getStoreOrder());
         }
         return list;
@@ -59,7 +59,7 @@ public class Product implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
+        ProductEntity product = (ProductEntity) o;
         return Objects.equals(id, product.id);
     }
 

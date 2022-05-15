@@ -1,6 +1,6 @@
 package com.kevin.courserefactor.base.service.email;
 
-import com.kevin.courserefactor.base.domain.StoreOrder;
+import com.kevin.courserefactor.base.domain.OrderEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -25,12 +25,12 @@ public abstract class AbstractEmailService implements EmailService {
     private JavaMailSender javaMailSender;
 
     @Override
-    public void sendOrderConfirmationEmail(StoreOrder obj) {
+    public void sendOrderConfirmationEmail(OrderEntity obj) {
         SimpleMailMessage smm = this.prepareSimpleMailMessageFromOrder(obj);
         this.sendEmail(smm);
     }
 
-    protected SimpleMailMessage prepareSimpleMailMessageFromOrder(StoreOrder obj) {
+    protected SimpleMailMessage prepareSimpleMailMessageFromOrder(OrderEntity obj) {
         SimpleMailMessage smm = new SimpleMailMessage();
         smm.setTo(obj.getClient().getEmail());
         smm.setFrom(this.sender);
@@ -41,7 +41,7 @@ public abstract class AbstractEmailService implements EmailService {
     }
 
     @Override
-    public void sendOrderConfirmationHtmlEmail(StoreOrder obj) {
+    public void sendOrderConfirmationHtmlEmail(OrderEntity obj) {
         try {
             MimeMessage mm = this.prepareMimeMessageFromOrder(obj);
             this.sendHtmlEmail(mm);
@@ -50,7 +50,7 @@ public abstract class AbstractEmailService implements EmailService {
         }
     }
 
-    protected MimeMessage prepareMimeMessageFromOrder(StoreOrder obj) throws MessagingException {
+    protected MimeMessage prepareMimeMessageFromOrder(OrderEntity obj) throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper mmh = new MimeMessageHelper(mimeMessage, true);
         mmh.setTo(obj.getClient().getEmail());
@@ -61,7 +61,7 @@ public abstract class AbstractEmailService implements EmailService {
         return mimeMessage;
     }
 
-    protected String htmlFromTemplateOrder(StoreOrder obj) {
+    protected String htmlFromTemplateOrder(OrderEntity obj) {
         Context context = new Context();
         context.setVariable("order", obj);
         return templateEngine.process("email/confirmationOrder", context);

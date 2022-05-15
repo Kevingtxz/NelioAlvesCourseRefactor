@@ -16,7 +16,7 @@ import java.util.Objects;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
-public abstract class Payment implements Serializable {
+public abstract class PaymentEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -29,10 +29,10 @@ public abstract class Payment implements Serializable {
     @OneToOne
     @JoinColumn(name = "store_order_id")
     @MapsId
-    private StoreOrder storeOrder;
+    private OrderEntity storeOrder;
 
 
-    public Payment(Integer id, PaymentState paymentState, StoreOrder storeOrder) {
+    public PaymentEntity(Integer id, PaymentState paymentState, OrderEntity storeOrder) {
         this.id = id;
         this.paymentState = paymentState != null ? paymentState.getCod() : null;
         this.storeOrder = storeOrder;
@@ -51,7 +51,7 @@ public abstract class Payment implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Payment city = (Payment) o;
+        PaymentEntity city = (PaymentEntity) o;
         return Objects.equals(id, city.id);
     }
 

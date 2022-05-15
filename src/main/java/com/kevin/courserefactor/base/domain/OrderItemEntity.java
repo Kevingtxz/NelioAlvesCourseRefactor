@@ -16,18 +16,18 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @Entity
-public class StoreOrderItem implements Serializable {
+public class OrderItemEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JsonIgnore
     @EmbeddedId
-    private StoreOrderItemPK id = new StoreOrderItemPK();
+    private OrderItemPKEntity id = new OrderItemPKEntity();
     private Double discount;
     private Integer quantity;
     private Double price;
 
 
-    public StoreOrderItem(StoreOrder storeOrder, Product product,Double discount, Integer quantity, Double price) {
+    public OrderItemEntity(OrderEntity storeOrder, ProductEntity product, Double discount, Integer quantity, Double price) {
         this.id.setStoreOrder(storeOrder);
         this.id.setProduct(product);
         this.discount = discount;
@@ -41,19 +41,19 @@ public class StoreOrderItem implements Serializable {
     }
 
     @JsonIgnore
-    public StoreOrder getStoreOrder() {
+    public OrderEntity getStoreOrder() {
         return this.id.getStoreOrder();
     }
 
-    public void setStoreOrder(StoreOrder storeOrder) {
+    public void setStoreOrder(OrderEntity storeOrder) {
         this.id.setStoreOrder(storeOrder);
     }
 
-    public Product getProduct() {
+    public ProductEntity getProduct() {
         return this.id.getProduct();
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(ProductEntity product) {
         this.id.setProduct(product);
     }
 
@@ -61,7 +61,7 @@ public class StoreOrderItem implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StoreOrderItem that = (StoreOrderItem) o;
+        OrderItemEntity that = (OrderItemEntity) o;
         return Objects.equals(id, that.id);
     }
 

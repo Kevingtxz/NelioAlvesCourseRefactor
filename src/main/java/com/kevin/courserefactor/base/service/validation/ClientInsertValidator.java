@@ -1,6 +1,6 @@
 package com.kevin.courserefactor.base.service.validation;
 
-import com.kevin.courserefactor.base.domain.Client;
+import com.kevin.courserefactor.base.domain.ClientEntity;
 import com.kevin.courserefactor.base.domain.enums.ClientType;
 import com.kevin.courserefactor.base.dto.form.ClientFormNew;
 import com.kevin.courserefactor.base.repository.ClientRepository;
@@ -31,7 +31,7 @@ public class ClientInsertValidator
                 && !BR.isValidCNPJ(objDto.getCpfOrCnpj()))
             list.add(new FieldMessage("cpfOrCnpj", "Invalid CPF"));
 
-        Client aux = repo.findByEmail(objDto.getEmail());
+        ClientEntity aux = repo.findByEmail(objDto.getEmail());
         if (aux != null)
             list.add(new FieldMessage("email", "Email has already been used"));
 

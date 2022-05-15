@@ -1,6 +1,6 @@
 package com.kevin.courserefactor.base.dto.view;
 
-import com.kevin.courserefactor.base.domain.Product;
+import com.kevin.courserefactor.base.domain.ProductEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +14,7 @@ public class ProductView {
     private String name;
     private Double price;
 
-    public ProductView(Product product) {
+    public ProductView(ProductEntity product) {
         this.id = product.getId();
         this.name = product.getName();
         this.price = product.getPrice();

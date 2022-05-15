@@ -15,12 +15,12 @@ import javax.persistence.Entity;
 @ToString
 @Entity
 @JsonTypeName("paymentWithCard")
-public class PaymentWithCard extends Payment {
+public class PaymentWithCardEntity extends PaymentEntity {
     private static final long serialVersionUID = 1L;
 
     private Integer installments;
 
-    public PaymentWithCard(Integer id, PaymentState paymentState, StoreOrder storeOrder, Integer installments) {
+    public PaymentWithCardEntity(Integer id, PaymentState paymentState, OrderEntity storeOrder, Integer installments) {
         super(id, paymentState, storeOrder);
         this.installments = installments;
     }

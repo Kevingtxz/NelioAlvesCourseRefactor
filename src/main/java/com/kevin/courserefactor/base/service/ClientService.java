@@ -1,8 +1,8 @@
 package com.kevin.courserefactor.base.service;
 
-import com.kevin.courserefactor.base.domain.Address;
-import com.kevin.courserefactor.base.domain.City;
-import com.kevin.courserefactor.base.domain.Client;
+import com.kevin.courserefactor.base.domain.AddressEntity;
+import com.kevin.courserefactor.base.domain.CityEntity;
+import com.kevin.courserefactor.base.domain.ClientEntity;
 import com.kevin.courserefactor.base.domain.enums.ClientType;
 import com.kevin.courserefactor.base.domain.enums.ProfileRole;
 import com.kevin.courserefactor.base.dto.form.ClientForm;
@@ -37,16 +37,16 @@ public class ClientService {
     private AddressRepository addressRepository;
 
 
-    public Page<Client> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+    public Page<ClientEntity> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
     }
 
-    public List<Client> findAll() {
+    public List<ClientEntity> findAll() {
         return repo.findAll();
     }
 
-    public Client find(Integer id) {
+    public ClientEntity find(Integer id) {
         UserSS user = UserService.authenticated();
         if (user == null || !user.hasRole(ProfileRole.ADMIN) && !id.equals(user.getId()))
             throw new AuthorizationException("Access denied");
@@ -54,19 +54,19 @@ public class ClientService {
         return repo.findById(id)
                 .orElseThrow(() ->
                         new ObjectNotFoundException("Object not found. ID: " + id
-                                + ", Type: " + Client.class.getName()));
+                                + ", Type: " + ClientEntity.class.getName()));
     }
 
     @Transactional
-    public Client insert(Client obj) {
+    public ClientEntity insert(ClientEntity obj) {
         obj.setId(null);
         obj = repo.save(obj);
         addressRepository.saveAll(obj.getAddresses());
         return obj;
     }
 
-    public void update(Client updObj) {
-        Client obj = this.find(updObj.getId());
+    public void update(ClientEntity updObj) {
+        ClientEntity obj = this.find(updObj.getId());
         this.updateData(obj, updObj);
         repo.save(obj);
     }
@@ -81,15 +81,15 @@ public class ClientService {
         }
     }
 
-    public Client fromDto(ClientFormNew objNewDto) {
-        Client client = new Client(
+    public ClientEntity fromDto(ClientFormNew objNewDto) {
+        ClientEntity client = new ClientEntity(
                 null,
                 objNewDto.getName(),
                 objNewDto.getEmail(),
                 objNewDto.getCpfOrCnpj(),
                 ClientType.toEnum(objNewDto.getClientType()),
                 pe.encode(objNewDto.getPassword()));
-        Address address = new Address(
+        AddressEntity address = new AddressEntity(
                 null,
                 objNewDto.getStreet(),
                 objNewDto.getNumber(),
@@ -97,7 +97,7 @@ public class ClientService {
                 objNewDto.getNeighborhood(),
                 objNewDto.getCep(),
                 client,
-                new City(objNewDto.getCityId(), null, null));
+                new CityEntity(objNewDto.getCityId(), null, null));
         client.getAddresses().add(address);
 
         client.getPhoneNumbers().add(objNewDto.getPhoneNumber1());
@@ -108,11 +108,11 @@ public class ClientService {
         return client;
     }
 
-    public Client fromDto(ClientForm objDto) {
-        return new Client(null, objDto.getName(), objDto.getEmail(), null, null, null);
+    public ClientEntity fromDto(ClientForm objDto) {
+        return new ClientEntity(null, objDto.getName(), objDto.getEmail(), null, null, null);
     }
 
-    private void updateData(Client obj, Client updObj) {
+    private void updateData(ClientEntity obj, ClientEntity updObj) {
         obj.setName(updObj.getName());
         obj.setEmail(updObj.getEmail());
     }

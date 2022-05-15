@@ -1,46 +1,47 @@
 package com.kevin.courserefactor.base.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-@AllArgsConstructor
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
 @Entity
-public class Address implements Serializable {
+public class StateEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String street;
-    private String number;
-    private String complement;
-    private String neighborhood;
-    private String cep;
+    private String name;
 
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
+    @OneToMany(mappedBy = "state")
+    private List<CityEntity> cities = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "city_id")
-    private City city;
+
+    public StateEntity(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Address city = (Address) o;
-        return Objects.equals(id, city.id);
+        StateEntity state = (StateEntity) o;
+        return Objects.equals(id, state.id);
     }
 
     @Override

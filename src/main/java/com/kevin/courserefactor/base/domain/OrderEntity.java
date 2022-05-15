@@ -1,6 +1,7 @@
 package com.kevin.courserefactor.base.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +16,7 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class StoreOrder implements Serializable {
+public class OrderEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -25,21 +26,21 @@ public class StoreOrder implements Serializable {
     private Date instant;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "storeOrder")
-    private Payment payment;
+    private PaymentEntity payment;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    private Client client;
+    private ClientEntity client;
 
     @ManyToOne
     @JoinColumn(name = "delivery_address_id")
-    private Address delivery_address;
+    private AddressEntity delivery_address;
 
     @OneToMany(mappedBy = "id.storeOrder")
-    private Set<StoreOrderItem> items = new HashSet<>();
+    private Set<OrderItemEntity> items = new HashSet<>();
 
 
-    public StoreOrder(Integer id, Date instant, Client client, Address delivery_address) {
+    public OrderEntity(Integer id, Date instant, ClientEntity client, AddressEntity delivery_address) {
         this.id = id;
         this.instant = instant;
         this.client = client;
@@ -49,7 +50,7 @@ public class StoreOrder implements Serializable {
 
     public double getTotalValue() {
         double totalValue = 0d;
-        for (StoreOrderItem soi : this.items)
+        for (OrderItemEntity soi : this.items)
             totalValue += soi.getSubTotal();
         return totalValue;
     }
@@ -58,7 +59,7 @@ public class StoreOrder implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StoreOrder city = (StoreOrder) o;
+        OrderEntity city = (OrderEntity) o;
         return Objects.equals(id, city.id);
     }
 
@@ -82,7 +83,7 @@ public class StoreOrder implements Serializable {
         strBuilder.append(", Payment situation: ");
         strBuilder.append(this.getPayment().getPaymentState().getDescription());
         strBuilder.append("\nDetails:\n");
-        for (StoreOrderItem soi : this.getItems())
+        for (OrderItemEntity soi : this.getItems())
             strBuilder.append(soi.toString());
         strBuilder.append("Total value: ");
         strBuilder.append(nf.format(this.getTotalValue()));
