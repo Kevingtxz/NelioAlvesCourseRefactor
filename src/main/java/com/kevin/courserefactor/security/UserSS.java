@@ -25,7 +25,7 @@ public class UserSS implements UserDetails {
         this.password = password;
         this.authorities = roles.stream()
                 .map(e -> new SimpleGrantedAuthority(e.getDescription()))
-                .collect(Collectors.toList());
+                    .collect(Collectors.toList());
     }
 
     public Integer getId() {

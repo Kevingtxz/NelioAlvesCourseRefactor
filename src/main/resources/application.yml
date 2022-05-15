@@ -26,7 +26,7 @@ default:
 
 jwt:
   secret: ${JWT_SECRET:none}
-  expiration: ${JWT_EXPIRATION:5000}
+  expiration: ${JWT_EXPIRATION:60000}
 #
 #aws:
 #  access_key_id: ${AWS_KEY:none}

@@ -8,6 +8,7 @@ import com.kevin.courserefactor.base.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -24,6 +25,8 @@ public class ClientResource {
     private ClientService service;
 
 
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping(value = "/page")
     public ResponseEntity<Page<ClientView>> findPage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -36,6 +39,8 @@ public class ClientResource {
         return ResponseEntity.ok().body(listDto);
     }
 
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<ClientView>> findAll() {
         List<Client> list = service.findAll();
@@ -72,6 +77,8 @@ public class ClientResource {
         return ResponseEntity.noContent().build();
     }
 
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         service.delete(id);

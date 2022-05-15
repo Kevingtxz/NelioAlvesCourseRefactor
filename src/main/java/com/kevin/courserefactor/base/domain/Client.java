@@ -3,7 +3,10 @@ package com.kevin.courserefactor.base.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kevin.courserefactor.base.domain.enums.ClientType;
 import com.kevin.courserefactor.base.domain.enums.ProfileRole;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
