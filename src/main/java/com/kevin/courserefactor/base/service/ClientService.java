@@ -4,12 +4,15 @@ import com.kevin.courserefactor.base.domain.Address;
 import com.kevin.courserefactor.base.domain.City;
 import com.kevin.courserefactor.base.domain.Client;
 import com.kevin.courserefactor.base.domain.enums.ClientType;
+import com.kevin.courserefactor.base.domain.enums.ProfileRole;
 import com.kevin.courserefactor.base.dto.form.ClientForm;
 import com.kevin.courserefactor.base.dto.form.ClientFormNew;
 import com.kevin.courserefactor.base.repository.AddressRepository;
 import com.kevin.courserefactor.base.repository.ClientRepository;
+import com.kevin.courserefactor.base.service.exceptions.AuthorizationException;
 import com.kevin.courserefactor.base.service.exceptions.DataIntegrityException;
 import com.kevin.courserefactor.base.service.exceptions.ObjectNotFoundException;
+import com.kevin.courserefactor.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -44,6 +47,10 @@ public class ClientService {
     }
 
     public Client find(Integer id) {
+        UserSS user = UserService.authenticated();
+        if (user == null || !user.hasRole(ProfileRole.ADMIN) && !id.equals(user.getId()))
+            throw new AuthorizationException("Access denied");
+
         return repo.findById(id)
                 .orElseThrow(() ->
                         new ObjectNotFoundException("Object not found. ID: " + id

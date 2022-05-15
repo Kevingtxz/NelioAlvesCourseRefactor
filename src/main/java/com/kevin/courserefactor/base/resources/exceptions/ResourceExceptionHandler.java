@@ -1,5 +1,6 @@
 package com.kevin.courserefactor.base.resources.exceptions;
 
+import com.kevin.courserefactor.base.service.exceptions.AuthorizationException;
 import com.kevin.courserefactor.base.service.exceptions.DataIntegrityException;
 import com.kevin.courserefactor.base.service.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -46,5 +47,15 @@ public class ResourceExceptionHandler {
             err.addError(fieldError.getField(), fieldError.getDefaultMessage());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<StandardError> authorization
+            (AuthorizationException e, HttpServletRequest request) {
+        StandardError err = new StandardError(
+                HttpStatus.FORBIDDEN.value(),
+                e.getMessage(),
+                System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
     }
 }
