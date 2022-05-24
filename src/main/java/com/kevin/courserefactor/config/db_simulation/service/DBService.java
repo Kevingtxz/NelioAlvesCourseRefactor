@@ -1,4 +1,4 @@
-package com.kevin.courserefactor.config.test.service;
+package com.kevin.courserefactor.config.db_simulation.service;
 
 import com.kevin.courserefactor.base.domain.*;
 import com.kevin.courserefactor.base.domain.enums.ClientType;

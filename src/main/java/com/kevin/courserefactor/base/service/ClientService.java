@@ -57,6 +57,10 @@ public class ClientService {
                                 + ", Type: " + ClientEntity.class.getName()));
     }
 
+    public ClientEntity findByEmail(String email) {
+        return repo.findByEmail(email);
+    }
+
     @Transactional
     public ClientEntity insert(ClientEntity obj) {
         obj.setId(null);

@@ -1,16 +1,16 @@
-package com.kevin.courserefactor.config.test.configs;
+package com.kevin.courserefactor.config.db_simulation.config;
 
 import com.kevin.courserefactor.base.service.email.EmailService;
-import com.kevin.courserefactor.base.service.email.MockMailService;
-import com.kevin.courserefactor.config.test.service.DBService;
+import com.kevin.courserefactor.base.service.email.SmtpEmailService;
+import com.kevin.courserefactor.config.db_simulation.service.DBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-@Profile("test")
-public class TestConfig {
+@Profile("dev")
+public class DevConfig {
 
     @Autowired
     private DBService dbService;
@@ -23,8 +23,6 @@ public class TestConfig {
 
     @Bean
     public EmailService emailService() {
-        return new MockMailService();
+        return new SmtpEmailService();
     }
-
-
 }
